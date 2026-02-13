@@ -6,3 +6,6 @@ task:
    status: install
   -name: service
    status: started
+
+   command: "cmd: sleeep"
+   apt: just demo
