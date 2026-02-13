@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: creating new ec2
+
+Resources:
+  WebServerSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: ssh port
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0 # Warning: Allows access from anywhere. Best practice is to limit to your IP.
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0 # Warning: Allows access from anywhere. Best practice is to limit to your IP.
+
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t3.large
+      ImageId: ami-0ff5003538b60d5ec
+      KeyName: aus
+      # Attach the Security Group created above
+      SecurityGroups:
+        - !Ref WebServerSecurityGroup
+      # Example: Latest Amazon Linux 2 AMI for us-east-1
